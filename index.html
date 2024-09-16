@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vaccine</title>
+</head>
+
+<style>
+    h1,h2{
+        text-align: center;
+    }
+    .container {
+        margin: auto;
+        width: 30%;
+    }
+    input{
+        display: block;
+
+    }
+
+
+    #left{
+        float: left;
+
+    }
+
+    #right{
+        float: right;
+    }
+    input[type=radio]{
+        display: inline-block;
+        margin-bottom: 25px;
+    }
+
+    #table-container{
+        justify-content: center;
+        margin: 250px;
+        position: relative;
+        display: flex;
+    }
+    #table1{
+        margin: 0px 5px 0px 5px;
+        float: left;
+        width: 50%;
+    }
+    #table2{
+        float: right;
+        width: 50%;
+    }
+    #list{
+        position: relative;
+        display: inline-block;
+        margin-left: 30px;
+
+    }
+
+</style>
+<body>
+
+<h1>Вакцина.мк</h1>
+<h2>Сајт за искажување интерес за вакцина</h2>
+<div class="container">
+    <div id="left">
+        <label for="name">Име: </label>
+        <input type="text" id="name" name="Име"> <br>
+
+        <label for="embg">Матичен број: </label>
+        <input type="text" id="embg" name="Матичен број"> <br>
+        <label for="years">Години: </label>
+        <input type="text" id="years" name="Години"> <br>
+
+        <label for="location">Локација</label>
+        <select id="location">
+            <option>Скопје</option>
+            <option>Битола</option>
+            <option>Куманово</option>
+            <option>Тетово</option>
+        </select><br>
+
+    </div>
+    <div id="right">
+        <label for="surname">Презиме: </label>
+        <input type="text" id="surname" name="Презиме"> <br>
+
+        <label>Пол: </label> <br>
+        <label for="female">Женски </label>
+        <input type="radio" id="female" name="gender" value="1">
+        <label for="male">Машки </label>
+        <input type="radio" id="male" name="gender" value="2"> <br>
+
+
+        <label for="email">Емаил адреса: </label>
+        <input type="email" id="email" name="Емаил"> <br>
+        <button type="button" id="btn" onclick="add()">Внеси</button>
+
+
+    </div>
+</div>
+
+<div id="table-container">
+    <div id="tbl-left">
+        <h2>Пријавени малолетни граѓани</h2>
+        <table id="table1">
+            <tr>
+                <th>Име</th>
+                <th>Презиме</th>
+                <th>Адреса</th>
+                <th>Локација</th>
+                <th>Статус</th>
+            </tr>
+        </table>
+    </div>
+
+
+    <div id="tbl-right">
+        <h2>Пријавени полнолетни граѓани</h2>
+        <table id="table2">
+            <tr>
+                <th>Име</th>
+                <th>Презиме</th>
+                <th>Адреса</th>
+                <th>Локација</th>
+                <th>Статус</th>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<div id="list">
+    <h2>Вакцинирани: </h2>
+    <ul id="ul-list">
+
+    </ul>
+</div>
+
+<script>
+    var body = document.getElementsByTagName("body")[0];
+    body.onload = function bodyF(){
+        for(let i=0; i<jpString.length;i++){
+            let name1 = jpString[i].name;
+            let surname1 = jpString[i].surname;
+            let id1 = jpString[i].id;
+            let gender1 = jpString[i].gender;
+            let years1 = jpString[i].years;
+            let location1 = jpString[i].location;
+            let email1 = jpString[i].email;
+            if(years1 > 18){
+                var row = table2.insertRow(-1);
+                if(gender1 == 1){
+                    row.style.backgroundColor = "red";
+                }
+                else{
+                    row.style.backgroundColor = "blue";
+                }
+                var cell0 = row.insertCell(0);
+                cell0.innerHTML = name1;
+                var cell1 = row.insertCell(1);
+                cell1.innerHTML = surname1;
+                var cell2 = row.insertCell(2);
+                cell2.innerHTML = email1;
+                var cell3 = row.insertCell(3);
+                cell3.innerHTML = location1;
+
+                var status = document.createElement("button");
+                var cell4 = row.insertCell(4)
+                cell4.appendChild(status);
+                status.innerHTML = "Вакциниран";
+                status.setAttribute("onclick", "vaccine(this)");
+
+            }
+            else{
+                var row = table1.insertRow(-1);
+                if(gender1 == 1){
+                    row.style.backgroundColor = "red";
+                }
+                else{
+                    row.style.backgroundColor = "blue";
+                }
+                var cell0 = row.insertCell(0);
+                cell0.innerHTML = name1;
+                var cell1 = row.insertCell(1);
+                cell1.innerHTML = surname1;
+                var cell2 = row.insertCell(2);
+                cell2.innerHTML = email1;
+                var cell3 = row.insertCell(3);
+                cell3.innerHTML = location1;
+
+                var status = document.createElement("button");
+                var cell4 = row.insertCell(4)
+                cell4.appendChild(status);
+                status.innerHTML = "Вакциниран";
+                status.setAttribute("disabled", "true");
+            }
+        }
+    }
+    var jString = '[{"name":"Angela","surname":"Angelova","id":"1304002004001","gender":"1","years":"23","email":"anch@yahoo.com","location":"Bitola"}, {"name":"Bojan","surname":"Jancev","id":"1211001004001","gender":"2","years":"14","email":"boy@yahoo.com","location":"Skopje"}]';
+    var jpString = JSON.parse(jString);
+
+    var minors = document.getElementById("table1");
+    var adults = document.getElementById("table2");
+
+    var counter = 0;
+
+    let embgArray = new Array();
+
+    function add(){
+        var name = document.getElementById("name").value;
+        var embg = document.getElementById("embg").value;
+        var years = document.getElementById("years").value;
+        var location = document.getElementById("location").value;
+        var surname = document.getElementById("surname").value;
+        var gender = document.querySelector('input[name="gender"]:checked').value;
+        var email = document.getElementById("email").value;
+
+        embgArray[counter] = embg;
+        counter++;
+
+        if(embg.length < 13){
+            alert("Невалиден матичен број!");
+            return;
+        }
+        var split = email.split('@');
+        if(split[1] != "gmail.com" && split[1] != "yahoo.com"){
+            alert("Невалидна емаил адреса!");
+            return;
+        }
+        if(years > 18){
+            var row = adults.insertRow(-1);
+            if(gender == 1){
+                row.style.backgroundColor = "red";
+            }else{
+                row.style.backgroundColor = "blue";
+            }
+            var cell0 = row.insertCell(0);
+            cell0.innerHTML = name;
+            var cell1 = row.insertCell(1);
+            cell1.innerHTML = surname;
+            var cell2 = row.insertCell(2);
+            cell2.innerHTML = email;
+            var cell3 = row.insertCell(3);
+            cell3.innerHTML = location;
+
+            var status = document.createElement("button");
+            var cell4 = row.insertCell(4)
+            cell4.appendChild(status);
+            status.innerHTML = "Вакциниран";
+            status.setAttribute("onclick", "vaccine(this)");
+        }else{
+            var row = minors.insertRow(-1);
+            if(gender == 1){
+                row.style.backgroundColor = "red";
+            }else{
+                row.style.backgroundColor = "blue";
+            }
+            var cell0 = row.insertCell(0);
+            cell0.innerHTML = name;
+            var cell1 = row.insertCell(1);
+            cell1.innerHTML = surname;
+            var cell2 = row.insertCell(2);
+            cell2.innerHTML = email;
+            var cell3 = row.insertCell(3);
+            cell3.innerHTML = location;
+
+            var status = document.createElement("button");
+            var cell4 = row.insertCell(4)
+            cell4.appendChild(status);
+            status.innerHTML = "Вакциниран";
+            status.setAttribute("disabled", "true");
+        }
+
+    }
+    function vaccine(x){
+        var cells = x.parentNode.parentNode.childNodes;
+        var list = document.getElementById("list");
+        var li = document.createElement("li");
+        li.innerText = cells[0].textContent + " " + cells[1].textContent;
+        list.appendChild(li);
+
+        x.parentNode.parentNode.remove();
+    }
+
+</script>
+
+</body>
+</html>
